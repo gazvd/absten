@@ -1,0 +1,6 @@
+# Ocultar bancos de dados brutos e scripts geradores do repositório público
+*.json
+*.py
+*.xlsx
+README.md
+relatorio_diagnostico_abstencao.md

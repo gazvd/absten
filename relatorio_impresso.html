@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório Diagnóstico - Abstenção e Geopolítica Eleitoral</title>
+<style>
+  @page {
+    size: A4;
+    margin: 16mm 14mm 16mm 14mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    background: #fff;
+    line-height: 1.45;
+    font-size: 10pt;
+  }
+  .header-box {
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+  }
+  .tag {
+    display: inline-block;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 7.5pt;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    border: 1px solid #bfdbfe;
+  }
+  h1 {
+    font-size: 16pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .meta-sub {
+    font-size: 8.5pt;
+    color: #64748b;
+    line-height: 1.35;
+  }
+  
+  /* KPI Cards */
+  .kpi-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .kpi {
+    flex: 1;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    border-left: 4px solid #3b82f6;
+  }
+  .kpi-label {
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #64748b;
+  }
+  .kpi-val {
+    font-size: 12pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 2px 0;
+  }
+  .kpi-note {
+    font-size: 7pt;
+    color: #64748b;
+  }
+  
+  h2 {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 14px 0 6px 0;
+    border-left: 3px solid #2563eb;
+    padding-left: 8px;
+  }
+  p {
+    margin-bottom: 6px;
+    text-align: justify;
+    font-size: 9.5pt;
+  }
+  
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px 0;
+    font-size: 8pt;
+  }
+  thead {
+    display: table-header-group;
+  }
+  th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    text-align: left;
+    padding: 5px 6px;
+    border-bottom: 1.5px solid #cbd5e1;
+    font-size: 7.5pt;
+    text-transform: uppercase;
+  }
+  td {
+    padding: 4px 6px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+  }
+  tr:nth-child(even) td {
+    background: #f8fafc;
+  }
+  .num {
+    text-align: right;
+  }
+  .bold {
+    font-weight: 700;
+  }
+  
+  /* Matrix */
+  .matrix {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 10px 0 12px 0;
+    page-break-inside: avoid;
+  }
+  .quadrant {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 10px;
+  }
+  .quad-title {
+    font-size: 9pt;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .q1-border { border-top: 3px solid #059669; }
+  .q2-border { border-top: 3px solid #dc2626; }
+  .q3-border { border-top: 3px solid #2563eb; }
+  .q4-border { border-top: 3px solid #d97706; }
+  .quad-stats {
+    font-size: 7.5pt;
+    line-height: 1.35;
+    color: #475569;
+  }
+  
+  .page-break {
+    page-break-before: always;
+  }
+  
+  .card-box {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    page-break-inside: avoid;
+    font-size: 8.5pt;
+  }
+  .card-box-header {
+    font-weight: 800;
+    font-size: 9pt;
+    color: #0f172a;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    margin-bottom: 5px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header-box">
+    <span class="tag">Ciência Política • Diagnóstico Quantitativo & Modelagem Econométrica</span>
+    <h1>Geopolítica da Abstenção, Regressão Linear e Saldo Eleitoral</h1>
+    <div class="meta-sub">
+      <strong>Base Cadastral Oficial (TSE):</strong> 158.745.502 Aptos | 33.469.244 Abstenções (21,08%) | 119.300.788 Válidos | 53.721.387 Lula (45,03%)<br>
+      <strong>Universo Geográfico:</strong> 28 Unidades Eleitorais (incluindo Exterior ZZ) &bull; 5.572 Municípios &bull; 6.107 Zonas Eleitorais
+    </div>
+  </div>
+
+  <!-- KPI ROW -->
+  <div class="kpi-row">
+    <div class="kpi" style="border-left-color: #3b82f6;">
+      <div class="kpi-label">Eleitorado Apto</div>
+      <div class="kpi-val">158.745.502</div>
+      <div class="kpi-note">100,00% reconciliado</div>
+    </div>
+    <div class="kpi" style="border-left-color: #ef4444;">
+      <div class="kpi-label">Abstenção Total</div>
+      <div class="kpi-val">33.469.244</div>
+      <div class="kpi-note">21,08% (Benchmark)</div>
+    </div>
+    <div class="kpi" style="border-left-color: #10b981;">
+      <div class="kpi-label">Elasticidade Lula</div>
+      <div class="kpi-val">+58,55%</div>
+      <div class="kpi-note">Conversão por novo votante</div>
+    </div>
+    <div class="kpi" style="border-left-color: #f59e0b;">
+      <div class="kpi-label">Saldo Potencial Líquido</div>
+      <div class="kpi-val">+452.412</div>
+      <div class="kpi-note">Cenário Integrado Q1+Q2</div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 1: RECONCILIAÇÃO -->
+  <h2>1. Reconciliação Matemática dos Dados e a 28ª Unidade Eleitoral (ZZ)</h2>
+  <p>
+    A contabilidade oficial do Tribunal Superior Eleitoral (TSE) registrou rigorosamente <strong>33.469.244 abstenções</strong> em 158.745.502 aptos. A diferença de 574.345 abstenções frente às 27 UFs decorria da circunscrição consular no exterior (sigla <code>ZZ</code>), com taxa de 62,66%. A inclusão de <code>ZZ</code> como a 28ª Unidade Eleitoral fecha 100% dos dados.
+  </p>
+
+  <!-- SEÇÃO 2: MATRIZ 2X2 -->
+  <h2>2. A Matriz Diagnóstica 2x2 (6.107 Zonas Eleitorais)</h2>
+  <div class="matrix">
+    <div class="quadrant q1-border">
+      <div class="quad-title" style="color: #065f46;">Q1: Lula &ge; 50% & Abstenção &gt; 21,08%</div>
+      <div class="quad-stats">
+        &bull; <strong>966 Zonas Eleitorais</strong> | <strong>4.537.980 abstenções</strong> (24,35% de média)<br>
+        &bull; <strong>18.634.886 aptos</strong> | Votação Média de Lula: <strong>62,64%</strong><br>
+        &bull; <em>Perfil:</em> Periferias metropolitanas (SP Zona Sul/Leste, Centro/Lapa RJ), Norte de MG (Januária), polos médios maranhenses (Codó) e municípios fluviais do Amazonas.
+      </div>
+    </div>
+    <div class="quadrant q2-border">
+      <div class="quad-title" style="color: #991b1b;">Q2: Oposição Alta (&lt; 50%) & Abstenção &gt; 21,08%</div>
+      <div class="quad-stats">
+        &bull; <strong>1.818 Zonas Eleitorais</strong> | <strong>14.396.843 abstenções</strong> (24,13% de média)<br>
+        &bull; <strong>59.654.167 aptos</strong> | Votação Média de Lula: <strong>36,18%</strong><br>
+        &bull; <em>Perfil:</em> Interior paulista (Campinas, Piracicaba, Ribeirão Preto), bairros nobres (Moema, Barra da Tijuca), cinturão do agro (Sinop/MT) e Exterior (ZZ).
+      </div>
+    </div>
+    <div class="quadrant q3-border">
+      <div class="quad-title" style="color: #1e40af;">Q3: Lula &ge; 50% & Abstenção &le; 21,08%</div>
+      <div class="quad-stats">
+        &bull; <strong>1.571 Zonas Eleitorais</strong> | <strong>6.019.334 abstenções</strong> (17,30% de média)<br>
+        &bull; <strong>34.798.388 aptos</strong> | Votação Média de Lula: <strong>64,44%</strong><br>
+        &bull; <em>Perfil:</em> Semiárido nordestino (Piauí, Ceará, Paraíba, Sergipe, Bahia) com comparecimento estruturalmente elevado.
+      </div>
+    </div>
+    <div class="quadrant q4-border">
+      <div class="quad-title" style="color: #92400e;">Q4: Oposição Alta (&lt; 50%) & Abstenção &le; 21,08%</div>
+      <div class="quad-stats">
+        &bull; <strong>1.752 Zonas Eleitorais</strong> | <strong>8.515.087 abstenções</strong> (18,65% de média)<br>
+        &bull; <strong>45.658.061 aptos</strong> | Votação Média de Lula: <strong>34,21%</strong><br>
+        &bull; <em>Perfil:</em> Sul do país (interior de SC e PR) e cidades médias conservadoras com mobilização intensa.
+      </div>
+    </div>
+  </div>
+
+  <!-- SEÇÃO 3: MODELAGEM ECONOMÉTRICA E REGRESSÃO -->
+  <h2>3. Modelagem Econométrica (Regressão OLS) e Estimativa de Saldo Eleitoral</h2>
+  <p>
+    A regressão linear por Mínimos Quadrados Ordinários (OLS) nas 6.107 zonas relaciona os votos sobre aptos e a taxa de abstenção ($T_{	ext{abst}}$):<br>
+    &bull; <strong>Lula / Aptos</strong> = $0,4836 - 0,5855 \cdot T_{	ext{abst}}$<br>
+    &bull; <strong>Flávio / Oposição / Aptos</strong> = $0,4795 - 0,4076 \cdot T_{	ext{abst}}$<br>
+    <strong>Elasticidade Nacional:</strong> Para cada 1,0 p.p. de redução na abstenção (+1 p.p. de comparecimento), Lula capta <strong>58,55%</strong> dos novos votantes e Flávio/Oposição capta <strong>40,76%</strong>, gerando um saldo líquido de <strong>+17,79 votos pró-Lula a cada 100 novos comparecimentos</strong>.<br>
+    <strong>No Quadrante 1 (966 zonas lulistas):</strong> O coeficiente de Lula é $eta = -1,0435$ vs $eta = +0,0504$ para a oposição. Praticamente <strong>100% dos novos votos no Q1 revertem para Lula</strong>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Cenário de Simulação</th>
+        <th class="num">Variação Votantes</th>
+        <th class="num">Votos Adicionais Lula</th>
+        <th class="num">Votos Adicionais Flávio/Oposição</th>
+        <th class="num">Saldo Líquido Lula</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">A. Mobilização no Q1 (Abstenção cai para 21,08%)</td>
+        <td class="num">+609.746</td>
+        <td class="num bold" style="color:#059669;">+357.102</td>
+        <td class="num">+223.560</td>
+        <td class="num bold" style="color:#059669;">+133.542 votos</td>
+      </tr>
+      <tr>
+        <td class="bold">B. Super-Mobilização no Q1 (Abstenção cai para 17,15% - Padrão NE)</td>
+        <td class="num">+1.344.241</td>
+        <td class="num bold" style="color:#059669;">+794.617</td>
+        <td class="num">+485.505</td>
+        <td class="num bold" style="color:#059669;">+309.112 votos</td>
+      </tr>
+      <tr>
+        <td class="bold">C. Desmobilização no Q2 (Abstenção sobe +2,0 p.p. nos redutos de oposição)</td>
+        <td class="num">-1.193.287</td>
+        <td class="num">-408.750</td>
+        <td class="num bold" style="color:#dc2626;">-727.620</td>
+        <td class="num bold" style="color:#059669;">+318.869 votos</td>
+      </tr>
+      <tr style="background:#ecfdf5;">
+        <td class="bold">D. Estratégia Integrada Combinada (Mobilização Q1 + Desmobilização Q2)</td>
+        <td class="num">Efeito Combinado</td>
+        <td class="num bold" style="color:#059669;">Ganho Líquido</td>
+        <td class="num bold" style="color:#dc2626;">Retração Opositora</td>
+        <td class="num bold" style="color:#059669; font-size:9pt;">+452.412 votos</td>
+      </tr>
+      <tr style="background:#d1fae5;">
+        <td class="bold">D2. Estratégia Integrada Máxima (Super Q1 17,15% + Desmobilização Q2)</td>
+        <td class="num">Efeito Combinado</td>
+        <td class="num bold" style="color:#059669;">Ganho Máximo</td>
+        <td class="num bold" style="color:#dc2626;">Retração Opositora</td>
+        <td class="num bold" style="color:#059669; font-size:9pt;">+627.981 votos</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <!-- SEÇÃO 4: 3 ÁREAS PARA FOCAR E 3 PARA DESMOBILIZAR -->
+  <h2>4. Áreas Críticas de Atuação: 3 Eixos de Mobilização e 3 Eixos de Desmobilização</h2>
+
+  <div class="card-box" style="border-left: 4px solid #059669;">
+    <div class="card-box-header" style="color:#065f46;">
+      3 ÁREAS QUE LULA DEVE FOCAR PARA MAXIMIZAR VOTOS (MOBILIZAÇÃO NO Q1)
+    </div>
+    <p>
+      <strong>1. Periferias Metropolitanas do Sudeste (São Paulo e Rio de Janeiro):</strong><br>
+      &bull; <em>Dados:</em> Zonas como M'Boi Mirim (57,6% Lula, 23,7% abst.), Parelheiros (56,1% Lula, 22,9% abst.), Cidade Tiradentes (57,4% Lula, 23,6% abst.), Grajaú (57,7% Lula, 22,6% abst.) e Centro/Lapa RJ (64,2% Lula, 26,7% abst.).<br>
+      &bull; <em>Potencial:</em> Concentram mais de 1 milhão de abstinentes onde Lula vence com folga. Focar em gratuidade do transporte municipal e logística no dia da eleição garante ganho imediato de mais de 150.000 votos líquidos.
+    </p>
+    <p>
+      <strong>2. Semiárido Setentrional & Vale do Jequitinhonha / Norte de Minas Gerais:</strong><br>
+      &bull; <em>Dados:</em> Januária/MG (70,6% Lula, 28,7% abst.), Novo Cruzeiro/MG (66,9% Lula, 36,5% abst.), Minas Novas/MG (69,6% Lula, 35,2% abst.), Buíque/PE (81,9% Lula, 27,7% abst.) e Codó/MA (71,5% Lula, 24,9% abst.).<br>
+      &bull; <em>Potencial:</em> Redutos onde Lula vence por 65% a 82%, mas a abstenção é anormalmente alta devido a barreiras de transporte rural vicinal. Cada 100 eleitores transportados revertem de 70 a 80 votos líquidos para Lula.
+    </p>
+    <p>
+      <strong>3. Calha Fluvial Amazônica e Polos Ribeirinhos do Pará e Amazonas:</strong><br>
+      &bull; <em>Dados:</em> Parintins/AM (78,7% Lula, 22,4% abst.), Itacoatiara/AM (59,0% Lula, 23,3% abst.), Manacapuru/AM (58,4% Lula, 22,1% abst.), Cametá/PA (68,1% Lula, 21,3% abst.) e Abaetetuba/PA (64,2% Lula, 21,7% abst.).<br>
+      &bull; <em>Potencial:</em> O custo de deslocamento de barco deprime a participação de bases majoritariamente lulistas. Operações de transporte hidroviário gratuito mitigam esse gargalo geográfico.
+    </p>
+  </div>
+
+  <div class="card-box" style="border-left: 4px solid #dc2626;">
+    <div class="card-box-header" style="color:#991b1b;">
+      3 ÁREAS PARA DESMOBILIZAR A OPOSIÇÃO / FLÁVIO (ESTIMULAR ABSTENÇÃO NO Q2)
+    </div>
+    <p>
+      <strong>1. Interior Paulista Conservador (Eixo Campinas - Ribeirão Preto - Piracicaba - Rio Preto):</strong><br>
+      &bull; <em>Dados:</em> Maior colégio conservador do país. Campinas (61,8% Oposição, 23,6% abst. — 205.914 abstinentes existentes), Ribeirão Preto (66,0% Oposição, 23,8% abst.), Piracicaba (72,5% Oposição, 23,2% abst.) e Rio Preto (71,8% Oposição, 24,1% abst.).<br>
+      &bull; <em>Efeito:</em> A oposição necessita das margens do interior de SP para compensar as perdas no Nordeste. Cada 1,5 p.p. a mais de abstenção nessa região drena votos quase que exclusivamente da oposição. Arrefecer temas de conflito moral diminui a urgência eleitoral do eleitor conservador moderado.
+    </p>
+    <p>
+      <strong>2. Cinturão do Agronegócio do Centro-Oeste e Norte do Mato Grosso/Goiás:</strong><br>
+      &bull; <em>Dados:</em> Sinop/MT (81,7% Oposição, 22,7% abst.), Sorriso/MT (76,3% Oposição, 24,6% abst.), Rondonópolis/MT (67,4% Oposição, 23,0% abst.), Anápolis/GO (70,8% Oposição, 23,3% abst.) e Rio Verde/GO (73,2% Oposição, 22,5% abst.).<br>
+      &bull; <em>Efeito:</em> Municípios onde a oposição obtém entre 70% e 82% dos votos válidos. Políticas pragmáticas de crédito rural (Plano Safra recorde) que desarmem a narrativa de 'ameaça' esvaziam o comparecimento militante, induzindo abstenção em finais de semana.
+    </p>
+    <p>
+      <strong>3. Enclaves Metropolitanos de Alta Renda e Cidades Satélites Conservadoras (Barra da Tijuca/RJ, Moema/SP, DF e ZZ):</strong><br>
+      &bull; <em>Dados:</em> Barra da Tijuca/RJ (66,9% Oposição, 23,8% abst.), Moema/SP (66,0% Oposição, 24,3% abst.), Vicente Pires/DF (66,8% Oposição, 18,8% abst.) e Exterior ZZ (62,7% de abstenção).<br>
+      &bull; <em>Efeito:</em> Eleitorado de alta renda com elevada propensão a viajar e abster-se em feriados. Enfraquecer a polarização e fomentar a desilusão com os candidatos de oposição asfixia as margens das elites urbanas de direita.
+    </p>
+  </div>
+
+  <!-- SEÇÃO 5: TABELA ESTADUAL RESUMIDA -->
+  <h2>5. Tabela Resumo das 28 Unidades Eleitorais</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>UF</th><th>Região</th><th class="num">Aptos</th><th class="num">Abstenção</th><th class="num">% Abst.</th><th class="num">Desvio</th><th class="num">Votos Lula</th><th class="num">% Lula</th><th>Classificação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td class="bold">PI</td><td>NE</td><td class="num">2.704.758</td><td class="num">463.875</td><td class="num">17,15%</td><td class="num" style="color:#059669;">-3,93 p.p.</td><td class="num">1.523.710</td><td class="num bold">70,99%</td><td>Alta Participação &bull; Reduto Lulista</td></tr>
+      <tr><td class="bold">BA</td><td>NE</td><td class="num">11.312.752</td><td class="num">2.259.151</td><td class="num">19,97%</td><td class="num" style="color:#059669;">-1,11 p.p.</td><td class="num">5.664.771</td><td class="num bold">66,17%</td><td>Maior Colégio do NE &bull; Alta Participação</td></tr>
+      <tr><td class="bold">PE</td><td>NE</td><td class="num">7.223.450</td><td class="num">1.312.388</td><td class="num">18,17%</td><td class="num" style="color:#059669;">-2,91 p.p.</td><td class="num">3.553.971</td><td class="num bold">63,45%</td><td>Alta Participação &bull; Reduto Lulista</td></tr>
+      <tr><td class="bold">CE</td><td>NE</td><td class="num">6.996.545</td><td class="num">1.086.074</td><td class="num">15,52%</td><td class="num" style="color:#059669;">-5,56 p.p.</td><td class="num">3.555.263</td><td class="num bold">63,29%</td><td>Menor Abstenção do Brasil</td></tr>
+      <tr><td class="bold">MG</td><td>SE</td><td class="num">16.372.372</td><td class="num">3.735.098</td><td class="num">22,81%</td><td class="num" style="color:#dc2626;">+1,73 p.p.</td><td class="num">5.188.936</td><td class="num bold">43,33%</td><td>Estado Decisivo &bull; Alta Abstenção</td></tr>
+      <tr><td class="bold">RJ</td><td>SE</td><td class="num">12.857.648</td><td class="num">2.997.846</td><td class="num">23,32%</td><td class="num" style="color:#dc2626;">+2,24 p.p.</td><td class="num">3.693.021</td><td class="num">39,41%</td><td>Alta Abstenção &bull; Vantagem Opositora</td></tr>
+      <tr><td class="bold">SP</td><td>SE</td><td class="num">34.122.892</td><td class="num">7.690.900</td><td class="num">22,54%</td><td class="num" style="color:#dc2626;">+1,46 p.p.</td><td class="num">9.505.413</td><td class="num">38,20%</td><td>Maior Volume Absoluto de Abstenções</td></tr>
+      <tr><td class="bold">RS</td><td>Sul</td><td class="num">8.522.545</td><td class="num">1.819.642</td><td class="num">21,35%</td><td class="num" style="color:#dc2626;">+0,27 p.p.</td><td class="num">2.294.759</td><td class="num">35,73%</td><td>Alta Abstenção &bull; Vantagem Opositora</td></tr>
+      <tr><td class="bold">PR</td><td>Sul</td><td class="num">8.613.657</td><td class="num">1.772.200</td><td class="num">20,57%</td><td class="num" style="color:#059669;">-0,51 p.p.</td><td class="num">2.054.597</td><td class="num">31,20%</td><td>Bastião Opositor</td></tr>
+      <tr><td class="bold">GO</td><td>CO</td><td class="num">5.080.590</td><td class="num">1.109.003</td><td class="num">21,83%</td><td class="num" style="color:#dc2626;">+0,75 p.p.</td><td class="num">1.188.880</td><td class="num">31,06%</td><td>Cinturão Agro &bull; Alta Abstenção</td></tr>
+      <tr><td class="bold">SC</td><td>Sul</td><td class="num">5.734.651</td><td class="num">1.086.492</td><td class="num">18,95%</td><td class="num" style="color:#059669;">-2,13 p.p.</td><td class="num">1.127.168</td><td class="num">25,04%</td><td>Menor Votação de Lula no Território</td></tr>
+      <tr style="background:#fffbeb;"><td class="bold">ZZ</td><td>Ext.</td><td class="num bold">916.534</td><td class="num bold">574.345</td><td class="num bold">62,66%</td><td class="num bold" style="color:#dc2626;">+41,58 p.p.</td><td class="num">-</td><td class="num">-</td><td class="bold">Maior Abstenção Estrutural do Cadastro</td></tr>
+    </tbody>
+  </table>
+
+</body>
+</html>
